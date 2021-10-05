@@ -1,0 +1,258 @@
+basePath: /
+definitions:
+  commands.CreateProductCommand:
+    properties:
+      name:
+        type: string
+      price:
+        type: number
+      status:
+        type: integer
+    required:
+    - name
+    - price
+    - status
+    type: object
+  models.BaseReponseModel:
+    properties:
+      code:
+        type: string
+      data:
+        type: object
+      errors:
+        items:
+          type: string
+        type: array
+      message:
+        type: string
+    type: object
+host: localhost:2805
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a sample web.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Web Sample API
+  version: "1.0"
+paths:
+  /:
+    get:
+      consumes:
+      - '*/*'
+      description: get the information of server.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Show the information of server.
+      tags:
+      - Home
+  /auth/me:
+    get:
+      consumes:
+      - '*/*'
+      description: get authenticated user information.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.BaseReponseModel'
+      security:
+      - ApiKeyAuth: []
+      summary: Get authenticated user information.
+      tags:
+      - Auth
+  /auth/token:
+    post:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: get authentication token.
+      parameters:
+      - description: username
+        in: formData
+        name: username
+        required: true
+        type: string
+      - description: password
+        in: formData
+        name: password
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.BaseReponseModel'
+      summary: Get authentication token.
+      tags:
+      - Auth
+  /health:
+    get:
+      consumes:
+      - '*/*'
+      description: get the status of server.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Show the status of server.
+      tags:
+      - Health
+  /products:
+    get:
+      consumes:
+      - '*/*'
+      description: get all products.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.BaseReponseModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.BaseReponseModel'
+      security:
+      - ApiKeyAuth: []
+      summary: Get all products.
+      tags:
+      - Products
+    post:
+      consumes:
+      - '*/*'
+      description: create product.
+      parameters:
+      - description: product data
+        in: body
+        name: productData
+        required: true
+        schema:
+          $ref: '#/definitions/commands.CreateProductCommand'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.BaseReponseModel'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/models.BaseReponseModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.BaseReponseModel'
+      security:
+      - ApiKeyAuth: []
+      summary: Create product.
+      tags:
+      - Products
+  /products/{id}:
+    delete:
+      consumes:
+      - '*/*'
+      description: delete product by id.
+      parameters:
+      - description: product id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: ""
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.BaseReponseModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.BaseReponseModel'
+      security:
+      - ApiKeyAuth: []
+      summary: Delete product by id.
+      tags:
+      - Products
+    get:
+      consumes:
+      - '*/*'
+      description: get product by id.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.BaseReponseModel'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.BaseReponseModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.BaseReponseModel'
+      security:
+      - ApiKeyAuth: []
+      summary: Get product by id.
+      tags:
+      - Products
+    put:
+      consumes:
+      - '*/*'
+      description: update product by id.
+      parameters:
+      - description: product id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: ""
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.BaseReponseModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.BaseReponseModel'
+      security:
+      - ApiKeyAuth: []
+      summary: Update product by id.
+      tags:
+      - Products
+schemes:
+- http
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

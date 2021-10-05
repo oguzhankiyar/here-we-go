@@ -1,0 +1,40 @@
+version: '3.5'
+
+services:
+  web-sample:
+    container_name: web-sample-host
+    image: web-sample-host
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      PERSISTENCE_HOST: postgres
+      PERSISTENCE_PORT: 5432
+      PERSISTENCE_USER: postgres
+      PERSISTENCE_PASSWORD: 123456
+      PERSISTENCE_DATABASE_NAME: here_we_go
+      APP_ENV: DEV
+      APP_HOST: 127.0.0.1
+      APP_VERSION: 1.0.0
+      APP_PORT: 2805
+      JWT_SECRET: secret
+      ADMIN_USERNAME: admin
+      ADMIN_PASSWORD: 123456
+    ports:
+      - '2805:2805'
+    depends_on:
+      - postgres
+    networks:
+      - web-sample-network
+
+  postgres:
+    container_name: web-sample-postgres
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: 123456
+    networks:
+      - web-sample-network
+
+networks:
+  web-sample-network:
+    driver: bridge

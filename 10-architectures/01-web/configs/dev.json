@@ -1,0 +1,7 @@
+{
+  "appName": "Web Sample",
+  "logName": "web-sample",
+  "logLevel": "debug",
+  "devMode": true,
+  "encoder": "json"
+}
