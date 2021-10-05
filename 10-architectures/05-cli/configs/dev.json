@@ -1,0 +1,7 @@
+{
+    "appName": "Cli Sample",
+    "logName": "cli-sample",
+    "logLevel": "debug",
+    "devMode": true,
+    "encoder": "json"
+}
