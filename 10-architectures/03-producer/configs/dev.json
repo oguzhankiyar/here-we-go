@@ -1,0 +1,9 @@
+{
+    "appName": "Producer Sample",
+    "logName": "producer-sample",
+    "logLevel": "debug",
+    "devMode": true,
+    "encoder": "json",
+    "healthInterval": 15,
+    "topicName": "HEALTH_CHECKS"
+  }
