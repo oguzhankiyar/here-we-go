@@ -1,0 +1,5 @@
+create_table("users", func(t) {
+	t.Column("id", "integer", {"primary": true})
+	t.Column("firstname", "text", {})
+	t.Column("lastname", "text", {})
+})
