@@ -1,0 +1,10 @@
+{
+    "appName": "Consumer Sample",
+    "logName": "consumer-sample",
+    "logLevel": "debug",
+    "devMode": true,
+    "encoder": "json",
+    "healthTreshold": 20,
+    "groupId": "health-consumer",
+    "topicName": "HEALTH_CHECKS"
+  }
