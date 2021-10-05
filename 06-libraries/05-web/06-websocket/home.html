@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Websocket Sample</title>
+    <script type="text/javascript">
+        window.onload = function () {
+            let socket;
+            const msg = document.getElementById("msg");
+            const messages = document.getElementById("messages");
+
+            function appendMessage(item) {
+                messages.appendChild(item);
+                messages.scrollTop = messages.scrollHeight - messages.clientHeight;
+            }
+
+            document.getElementById("form").onsubmit = function () {
+                if (!socket) {
+                    return false;
+                }
+
+                if (!msg.value) {
+                    return false;
+                }
+
+                socket.send(msg.value);
+                msg.value = "";
+                return false;
+            };
+
+            if (window["WebSocket"]) {
+                socket = new WebSocket("ws://" + document.location.host + "/ws");
+
+                socket.onclose = function (evt) {
+                    const item = document.createElement("div");
+                    item.innerHTML = "<i>Connection closed.</i>";
+                    appendMessage(item);
+                };
+
+                socket.onmessage = function (evt) {
+                    const messages = evt.data.split('\n');
+                    for (let i = 0; i < messages.length; i++) {
+                        const item = document.createElement("div");
+                        item.innerText = messages[i];
+                        appendMessage(item);
+                    }
+                };
+            } else {
+                const item = document.createElement("div");
+                item.innerHTML = "<i>Your browser does not support WebSockets.</i>";
+                appendMessage(item);
+            }
+        };
+    </script>
+    <style>
+        html {
+            overflow: hidden;
+        }
+
+        body {
+            overflow: hidden;
+            padding: 0;
+            margin: 10% auto;
+            width: 500px;
+            height: 500px;
+            background: #363636;
+        }
+
+        #messages {
+            background: #eee;
+            margin: 0;
+            width: 500px;
+            height: 400px;
+            padding: 10px;
+            overflow: auto;
+            font-family: Verdana;
+            font-size: 13px;
+        }
+
+        #msg {
+            outline: none;
+            border: none;
+            border-top: 1px solid #ccc;
+            width: 100%;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="messages"></div>
+    <form id="form">
+        <input type="text" id="msg" placeholder="Type message..." autofocus />
+    </form>
+</body>
+</html>
