@@ -1,0 +1,157 @@
+basePath: /
+consumes:
+- application/json
+definitions:
+  GenericError:
+    description: GenericError is a generic error message returned by a server
+    properties:
+      message:
+        type: string
+        x-go-name: Message
+    type: object
+    x-go-package: redoc-sample/docs
+  Item:
+    description: Item defines the structure for an API item
+    properties:
+      description:
+        description: the description for this item
+        maxLength: 10000
+        type: string
+        x-go-name: Description
+      id:
+        description: the id for the item
+        format: int64
+        minimum: 1
+        type: integer
+        x-go-name: ID
+      name:
+        description: the name for this item
+        maxLength: 255
+        type: string
+        x-go-name: Name
+    required:
+    - name
+    type: object
+    x-go-package: redoc-sample/models
+  ValidationError:
+    description: ValidationError is a collection of validation error messages
+    properties:
+      messages:
+        items:
+          type: string
+        type: array
+        x-go-name: Messages
+    type: object
+    x-go-package: redoc-sample/docs
+info:
+  description: Documentation for Item API
+  title: of Item API
+  version: 1.0.0
+paths:
+  /items:
+    get:
+      description: Return a list of items from the database
+      operationId: getAll
+      responses:
+        "200":
+          $ref: '#/responses/itemsResponse'
+      tags:
+      - items
+    post:
+      description: Create a new item
+      operationId: createItem
+      parameters:
+      - description: |-
+          Item data structure to Update or Create.
+          Note: the id field is ignored by update and create operations
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/Item'
+      responses:
+        "200":
+          $ref: '#/responses/itemResponse'
+        "422":
+          $ref: '#/responses/errorValidation'
+        "501":
+          $ref: '#/responses/errorResponse'
+      tags:
+      - items
+    put:
+      description: Update a item details
+      operationId: updateItem
+      parameters:
+      - description: |-
+          Item data structure to Update or Create.
+          Note: the id field is ignored by update and create operations
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/Item'
+      - description: The id of the item for which the operation relates
+        format: int64
+        in: path
+        name: id
+        required: true
+        type: integer
+        x-go-name: ID
+      responses:
+        "201":
+          $ref: '#/responses/noContentResponse'
+        "404":
+          $ref: '#/responses/errorResponse'
+        "422":
+          $ref: '#/responses/errorValidation'
+      tags:
+      - items
+  /items/{id}:
+    delete:
+      description: Delete a item
+      operationId: deleteItem
+      responses:
+        "201":
+          $ref: '#/responses/noContentResponse'
+        "404":
+          $ref: '#/responses/errorResponse'
+        "501":
+          $ref: '#/responses/errorResponse'
+      tags:
+      - items
+    get:
+      description: Return a list of items from the database
+      operationId: getOne
+      responses:
+        "200":
+          $ref: '#/responses/itemResponse'
+        "404":
+          $ref: '#/responses/errorResponse'
+      tags:
+      - items
+produces:
+- application/json
+responses:
+  errorResponse:
+    description: Generic error message returned as a string
+    schema:
+      $ref: '#/definitions/GenericError'
+  errorValidation:
+    description: Validation errors defined as an array of strings
+    schema:
+      $ref: '#/definitions/ValidationError'
+  itemResponse:
+    description: Data structure representing a single item
+    schema:
+      $ref: '#/definitions/Item'
+  itemsResponse:
+    description: A list of items
+    schema:
+      items:
+        $ref: '#/definitions/Item'
+      type: array
+  noContentResponse:
+    description: No content is returned by this API endpoint
+schemes:
+- http
+swagger: "2.0"
