@@ -1,0 +1,12 @@
+version: '3.5'
+
+services:
+  cron-sample:
+    container_name: cron-sample-host
+    image: cron-sample-host
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      APP_ENV: DEV
+      APP_VERSION: 1.0.0

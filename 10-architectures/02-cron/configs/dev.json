@@ -1,0 +1,25 @@
+{
+    "appName": "Cron Sample",
+    "logName": "cron-sample",
+    "logLevel": "debug",
+    "devMode": true,
+    "encoder": "json",
+    "jobs": [
+        {
+            "id": "check_status",
+            "cron": "*/10 * * * * *",
+            "retry": 3,
+            "args": {
+                "url": "https://github.com"
+            }
+        },
+        {
+            "id": "check_status",
+            "cron": "*/3 * * * * *",
+            "retry": 3,
+            "args": {
+                "url": "https://golang.org"
+            }
+        }
+    ]
+}
