@@ -90,6 +90,15 @@
   - [simple](02-basics/21-errors/01-simple)
   - [func](02-basics/21-errors/02-func)
   - [custom](02-basics/21-errors/03-custom)
+- [generics](02-basics/22-generics)
+  - [simple](02-basics/22-generics/01-simple)
+  - [comparable](02-basics/22-generics/02-comparable)
+  - [constraints](02-basics/22-generics/03-constraints)
+  - [underlying](02-basics/22-generics/04-underlying)
+  - [func](02-basics/22-generics/05-func)
+  - [receiver](02-basics/22-generics/06-receiver)
+  - [reflect](02-basics/22-generics/07-reflect)
+  - [assertion](02-basics/22-generics/08-assertion)
 
 ### Concurrency
 - [goroutines](03-concurrency/01-goroutines)
