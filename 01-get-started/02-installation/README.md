@@ -35,7 +35,7 @@ https://git-scm.com/download/win
 ```
 2. Install golang from this address
 ```
-https://git-scm.com/download/win
+https://go.dev/dl
 ```
 3. Set the environment variables
 ```cmd
